@@ -11,6 +11,7 @@
   --card-set-gap: 30px;
   --icon: #AFB1B8;
   --footer-social-links: rgba(255, 255, 255, 0.1);
+  /* --body-padding-top: 80px; */
 } 
 
 *{margin: 0; padding: 0; box-sizing: border-box}
@@ -21,6 +22,7 @@ body {
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
+  /* padding-top: var(--body-padding-top); */
   padding-left: 0px;
 }
 
@@ -42,12 +44,23 @@ address p {
 /*********** HEADER ************/
 
 .head-section {
+  /* position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;*/
+  position: sticky;
+  top: -1px;
+  z-index: 2; 
   background-color: var(--main-light); 
   color: var(--text-main-dark);  
   display: flex;
-  padding: 24px 0 25px;
+  padding: 0;
   border: 1px solid var(--header-border);
 }
+
+/* .head-section.portfolio{
+  border: 1px solid var(--header-border);
+} */
 
 .header-section, 
 .header-nav-list, 
@@ -80,6 +93,8 @@ address p {
 }
 
 .link {
+  display: block;
+  padding: 32px 0;
   font-weight: 500;
   line-height: 16px;
   letter-spacing: 0.02em;
@@ -93,15 +108,34 @@ address p {
 
 .link:hover {
   color: var(--text-accent);
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .link:focus {
   color: var(--text-accent);
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .link.current {
+  position: relative;
   color: var(--text-accent);
 }
+
+
+.header-menu-item {
+  position: relative;
+}
+
+.header-menu-item .link.current::after {
+  position: absolute; 
+  left: 0;
+  bottom: -1px;
+  content: '';
+  width: 100%;
+  height: 4px;
+  background-color: var(--text-accent);
+  border-radius: 2px;
+} 
 
 .header-menu-list :not(:last-child) {
   margin-right: 50px;
@@ -130,6 +164,10 @@ address p {
   outline: none;
 }
 
+.head-contacts.link {
+  white-space: nowrap;
+}
+
 .head-contacts-icon {
   fill: currentColor;
 }
@@ -140,10 +178,12 @@ address p {
 
 .head-contacts:hover {
   color: var(--text-accent);
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .head-contacts:focus {
   color: var(--text-accent);
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }  
 
 
@@ -179,7 +219,6 @@ address p {
 }
 
 .footer-social-link-li {
-  
   fill: var(--main-light);
   background-color: var(--footer-social-links);
   border-radius: 50%;
@@ -196,6 +235,7 @@ address p {
   background-color: var(--text-accent);
   border-radius: 50%;
   outline: none;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .footer-social-link-li .social-link-a :visited {
@@ -229,10 +269,12 @@ address p {
 
 .footer-contacts:hover {
   color: var(--text-accent);
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .footer-contacts:focus {
   color: var(--text-accent);
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /********************* MAIN (index.html)*************************/
@@ -456,6 +498,7 @@ address p {
   fill: var(--main-light);
   background-color: var(--text-accent);
   outline: none;
+  transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1), fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .social-link-a {
@@ -489,12 +532,14 @@ address p {
 .clients-ul :hover {
   fill: var(--text-accent);
   border-color: var(--text-accent); 
+  transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1), fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .clients-ul :focus  {
   fill: var(--text-accent);
   border-color: var(--text-accent); 
   outline: none;
+  transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1), fill 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .clients-li {
@@ -530,22 +575,59 @@ address p {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.2);
+  z-index: 3;
+  opacity: 1;
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1), opacity 3250ms cubic-bezier(0.4, 0, 0.2, 1) ;
 }
 
 .backdrop.is-hidden {
+  visibility: hidden;
   opacity: 0;
-  pointer-events: none;
+  pointer-events: none;  
+}
+
+.backdrop.is-hidden .modal {
+  transform: translate(-50%, -50%) scale(0.1) 
 }
 
 .modal {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(1);
   width: 528px;
   height: 581px;
+  /* min-width: 528px; 
+  max-height: 100vh; 
+  width: 100%; */
   background: var(--main-light);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding: 40px;
+  overflow-y: auto;
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  
 }
+
+
+.modal-close-button {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  padding: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  fill: #000000;
+  outline: none;
+}
+
+/* .modal-close-button :hover, .modal-close-button :focus {
+  fill: var(--text-accent);
+  border-color: var(--text-accent);
+} */
 
 
 /**********  PORTFOLIO  *************/
@@ -583,6 +665,7 @@ address p {
   outline: none;
   box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.08), 0px 2px 2px rgba(0, 0, 0, 0.12);
   border: 1px solid var(--text-accent);
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .project-filter-button:hover {
@@ -591,6 +674,7 @@ address p {
   outline: none;
   box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.08), 0px 2px 2px rgba(0, 0, 0, 0.12);
   border: 1px solid var(--text-accent);
+  transition: color 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .project-ul {
@@ -619,10 +703,6 @@ address p {
   box-shadow: none;
 }
 
-.project-ul-li :hover .project-card-describe-hover {
-  opacity: 1;
-}
-
 .project-ul-li :focus {
   border: none; 
   outline: none;
@@ -635,11 +715,12 @@ address p {
 
 .project-card-img {
   position: relative;
+  overflow: hidden;
 }
 
 .project-card-describe-hover {
   position: absolute;
-  padding: 63px 24px;
+  padding: 62px 23px;
   overflow: auto;
   width: 100%;
   height: 100%;
@@ -652,6 +733,14 @@ address p {
   color: var(--main-light);
   outline: none;
   opacity: 0;
+  transform: translatey(100%);
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* project-card-describe-hover */
+.project-ul-li :hover .project-card-describe-hover {
+  opacity: 1;
+  transform: translatey(0);
 }
 
 .project-content {
