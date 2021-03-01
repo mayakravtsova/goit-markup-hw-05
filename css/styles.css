@@ -560,6 +560,7 @@ address p {
   box-sizing: border-box;
   border-radius: 4px;
   cursor: pointer;
+  transition: border-color var(--time-duration) var(--timing-function), fill var(--time-duration) var(--timing-function);
 }
 
 .clients-a :visited {
